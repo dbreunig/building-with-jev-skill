@@ -38,6 +38,8 @@ cp -r building-with-jev-skill/skills/jev ~/.claude/skills/jev
 
 Claude loads the skill on its own when a task involves Jev or TypeSafe questions. You can also invoke it by name with `/jev`.
 
+When installed as the `jev` plugin, invoke the skill explicitly with `/jev:jev`.
+
 ## Sources
 
 The guidance draws on the [TypeSafe docs](https://docs.typesafe.ai). `SKILL.md` lists the specific pages.
