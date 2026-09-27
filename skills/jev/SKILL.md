@@ -20,6 +20,7 @@ This guidance applies to `jev-1.13`. The docs mark several limits as likely to i
 5. Put every question that shares the state into one request, including questions that matter for only some inputs.
 6. Combine the answers in code: branches, weights, and confidence gates.
 7. Test against labeled examples. Read `probabilities` on the misses, then revise one or two questions at a time.
+8. After code acts, verify the effect. Keep the Jev judgment, policy decision, executor result, and observed outcome separate.
 
 ## Choose the primitive
 
@@ -162,6 +163,16 @@ elif category.choice == "billing" and response.answers["refund_requested"].noul 
 - A Noul has no `confidence`. Its distance from 0.5 plays that role.
 - Every answer stays inside the options you supplied, so code never parses prose.
 
+## Verify the effect
+
+A valid Jev answer is not proof that the application should act or that the resulting action succeeded. Confidence gates model uncertainty; authorization, user consent, and application policy remain separate checks in code. Completion must come from a verified change in the target system.
+
+- Recheck mutable evidence, available actions, authorization, consent, and policy immediately before an external or irreversible action. If the evidence changed, rebuild the state and decide again; if another check fails, do not execute.
+- Record the complete typed Jev answer, the policy decision made by code, the attempted action and tool result, and the observed postcondition as separate fields.
+- Verify the postcondition from the target system. An empty or partial result, stale target, or timeout can make the outcome failed or unknown even after the right high-confidence judgment. A permission or login gate is a controlled non-execution outcome, not an executor failure.
+- Classify failures by layer: missing or stale evidence, model judgment, policy or composition, executor or service, and verification. Revise the Jev question only when the model judgment itself was wrong.
+- Retry an idempotent operation, or reuse the original idempotency key with identical request parameters. Otherwise retry only when authoritative executor evidence shows that no side effect committed and all preconditions and permissions remain valid; if not, flag or hand off.
+
 ## Improve a program
 
 Find the question that fails before changing anything. Collect labeled examples, run them, and compare each question's answers and probabilities against the labels.
@@ -201,6 +212,7 @@ Rules for revising:
 - [ ] The state holds only what the questions need and fits the token limits.
 - [ ] All questions on the same state travel in one request.
 - [ ] Every action has a confidence threshold matched to its risk, and low confidence has a fallback.
+- [ ] External actions check permission, policy, and mutable preconditions, then record the judgment, policy decision, executor result, and verified effect separately.
 - [ ] Weights and thresholds live in code.
 - [ ] Labeled examples back every revision.
 
@@ -210,4 +222,6 @@ Rules for revising:
 - https://docs.typesafe.ai/primitives/advanced
 - https://docs.typesafe.ai/patterns, with `/fan-out`, `/confidence-routing`, `/composite-scoring`, and `/intent-routing`
 - https://docs.typesafe.ai/primitives, https://docs.typesafe.ai/primitives/score, and https://docs.typesafe.ai/confidence, which the patterns pages assume
+- https://evals.typesafe.ai/agent_trace_observability
+- https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md
 - https://docs.typesafe.ai/llms.txt lists every page. Append `.md` to a docs URL for raw markdown.
