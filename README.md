@@ -14,7 +14,7 @@ It targets `jev-1.14` and `jev-1.13`. Images and Box questions are experimental 
 
 TypeSafe publishes its own agent skill at [typesafe-ai/skills](https://github.com/typesafe-ai/skills). That skill covers the API and helps you find places to use TypeSafe. This skill focuses on writing questions, composing answers, and fixing questions that fail.
 
-The skill lives in [`skills/jev/SKILL.md`](skills/jev/SKILL.md).
+The skill lives in [`skills/jev/SKILL.md`](skills/jev/SKILL.md). Guidance for images and Box questions lives in [`skills/jev/references/images-and-box.md`](skills/jev/references/images-and-box.md), and the agent reads it only when a task uses images.
 
 ## Install
 
