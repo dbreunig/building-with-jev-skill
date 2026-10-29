@@ -2,7 +2,17 @@
 
 This repo holds an agent skill for writing and improving programs that call Jev, TypeSafe's System One model.
 
-The skill covers question design (Choice, Score, Noul), state structure, answer composition in code, confidence thresholds, and diagnosis of questions that answer wrong or with low confidence. It targets `jev-1.13`.
+The skill covers these topics:
+
+- question design for Choice, Score, Noul, and Box
+- state structure, including images
+- answer composition in code
+- confidence thresholds
+- diagnosis of questions that answer wrong or with low confidence
+
+It targets `jev-1.14` and `jev-1.13`. Images and Box questions are experimental in the TypeSafe API, and the skill marks them that way.
+
+TypeSafe publishes its own agent skill at [typesafe-ai/skills](https://github.com/typesafe-ai/skills). That skill covers the API and helps you find places to use TypeSafe. This skill focuses on writing questions, composing answers, and fixing questions that fail.
 
 The skill lives in [`skills/jev/SKILL.md`](skills/jev/SKILL.md).
 
